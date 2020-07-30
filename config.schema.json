@@ -1,5 +1,5 @@
 {
-  "pluginAlias": "ExampleHomebridgePlugin",
+  "pluginAlias": "EcobeeAway",
   "pluginType": "platform",
   "singular": true,
   "schema": {
