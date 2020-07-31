@@ -9,6 +9,7 @@ export class AuthTokenManager {
 	private static instance: AuthTokenManager;
 
 	constructor(private readonly platform: EcobeeAPIPlatform) {
+		this.refreshToken = platform.config.refreshToken;
 	}
 
 	static configureForPlatform(homebridge: EcobeeAPIPlatform) {
@@ -22,6 +23,7 @@ export class AuthTokenManager {
 	}
 
 	public authToken = '';
+	private refreshToken = '';
 	private expiration = moment();
 
 	private ecobeeAPIKey = 'LvHbdQIXI5zoGoZW2uyWk2Ejfb1vtQWq';
@@ -32,8 +34,12 @@ export class AuthTokenManager {
 	}
 
 	async renewAuthToken() {
+		if(this.refreshToken === ''){
+			this.platform.log.error('Error: No refresh token in config file');
+			throw 'Error: No refresh token in config file';
+		}
 		try {
-			const oldRefreshToken = this.platform.config.refreshToken;
+			const oldRefreshToken = this.refreshToken;
 			this.platform.log.info('Renewing auth token');
 			this.platform.log.debug('Old refresh token: ' + oldRefreshToken);
 			const authRequest = await axios.post('https://api.ecobee.com/token', querystring.stringify({
@@ -48,6 +54,7 @@ export class AuthTokenManager {
 			const loadedUpdatedRefreshToken = authData.refresh_token;
 
 			this.authToken = loadedAuthToken;
+			this.refreshToken = loadedUpdatedRefreshToken;
 			this.expiration = moment().add(loadedExpiresIn, 'seconds');
 
 			//console.log(`Updated auth token ${loadedAuthToken} with expiration ${this.expiration}`);
@@ -58,7 +65,7 @@ export class AuthTokenManager {
 
 			this.platform.log.debug('Updating refresh token to ' + loadedUpdatedRefreshToken);
 
-			return { authToken: loadedAuthToken, expiresIn: loadedExpiresIn, refreshToken: loadedUpdatedRefreshToken };
+			return loadedAuthToken;
 		} catch(error){
 			this.platform.log.error(`Error refreshing token: ${JSON.stringify(error.response.data)}`);
 		}
