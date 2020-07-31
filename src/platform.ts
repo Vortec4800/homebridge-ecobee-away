@@ -24,6 +24,8 @@ export class EcobeeAPIPlatform implements IndependentPlatformPlugin {
 	) {
 		this.log.debug('Finished initializing platform:', this.config.name);
 
+		AuthTokenManager.configureForPlatform(this);
+
 		// When this event is fired it means Homebridge has restored all cached accessories from disk.
 		// Dynamic Platform plugins should only register new accessories after this event was fired,
 		// in order to ensure they weren't added to homebridge already. This event can also be used
@@ -31,8 +33,7 @@ export class EcobeeAPIPlatform implements IndependentPlatformPlugin {
 		this.api.on('didFinishLaunching', async () => {
 			log.debug('Executed didFinishLaunching callback');
 			// load access token
-			const oldRefreshToken = config.refreshToken;
-			await AuthTokenManager.renewAuthToken(oldRefreshToken, api);
+			await AuthTokenManager.getInstance().renewAuthToken();
 
 			// run the method to discover / register your devices as accessories
 			this.loadControlSwitches();

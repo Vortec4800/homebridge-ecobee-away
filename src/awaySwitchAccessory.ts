@@ -66,12 +66,11 @@ export class AwaySwitchAccessory {
 	async setOn(value: CharacteristicValue, callback: CharacteristicSetCallback) {
 		try {
 			const targetValue = value as boolean;
-			const needsRefresh = AuthTokenManager.isExpired();
+			const needsRefresh = AuthTokenManager.getInstance().isExpired();
 			if (needsRefresh) {
-				const oldRefreshToken = this.platform.config.refreshToken;
-				await AuthTokenManager.renewAuthToken(oldRefreshToken, this.platform.api);
+				await AuthTokenManager.getInstance().renewAuthToken();
 			}
-			const authToken = AuthTokenManager.authToken;
+			const authToken = AuthTokenManager.getInstance().authToken;
 			if (targetValue) {
 				// away
 				const awayBody = {
@@ -150,12 +149,11 @@ export class AwaySwitchAccessory {
 	}
 
 	private async checkStatusFromAPI() {
-		const needsRefresh = AuthTokenManager.isExpired();
+		const needsRefresh = AuthTokenManager.getInstance().isExpired();
 		if (needsRefresh) {
-			const oldRefreshToken = this.platform.config.refreshToken;
-			await AuthTokenManager.renewAuthToken(oldRefreshToken, this.platform.api);
+			await AuthTokenManager.getInstance().renewAuthToken();
 		}
-		const authToken = AuthTokenManager.authToken;
+		const authToken = AuthTokenManager.getInstance().authToken;
 
 		const queryRequest = await axios.get('https://api.ecobee.com/1/thermostat?format=json&body={"selection":{"selectionType":"registered","selectionMatch":"","includeEvents":true}}', {headers: {'Authorization': 'Bearer ' + authToken}});
 		const queryData = queryRequest.data;

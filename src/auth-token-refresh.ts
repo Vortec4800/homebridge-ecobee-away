@@ -1,29 +1,44 @@
+import { EcobeeAPIPlatform } from './platform';
+
 import moment from 'moment';
 import axios from 'axios';
 import querystring from 'querystring';
 import { updateHomebridgeConfig } from './config';
 
 export class AuthTokenManager {
-	// eslint-disable-next-line @typescript-eslint/no-empty-function
-	constructor() {
+	private static instance: AuthTokenManager;
+
+	constructor(private readonly platform: EcobeeAPIPlatform) {
 	}
 
-	public static authToken = '';
-	private static expiration = moment();
+	static configureForPlatform(homebridge: EcobeeAPIPlatform) {
+		if (!AuthTokenManager.instance) {
+			AuthTokenManager.instance = new AuthTokenManager(homebridge);
+		}
+	}
 
-	private static ecobeeAPIKey = 'LvHbdQIXI5zoGoZW2uyWk2Ejfb1vtQWq';
+	static getInstance(): AuthTokenManager {
+		return AuthTokenManager.instance;
+	}
 
-	static isExpired() {
+	public authToken = '';
+	private expiration = moment();
+
+	private ecobeeAPIKey = 'LvHbdQIXI5zoGoZW2uyWk2Ejfb1vtQWq';
+
+	isExpired() {
 		const now = moment();
 		return this.authToken === '' || this.expiration.isBefore(now);
 	}
 
-	static async renewAuthToken(refreshToken: string, homebridge: any) {
+	async renewAuthToken() {
 		try {
-			console.log('renewing auth token');
+			const oldRefreshToken = this.platform.config.refreshToken;
+			this.platform.log.info('Renewing auth token');
+			this.platform.log.debug('Old refresh token: ' + oldRefreshToken);
 			const authRequest = await axios.post('https://api.ecobee.com/token', querystring.stringify({
 				grant_type: 'refresh_token',
-				code: refreshToken,
+				code: oldRefreshToken,
 				client_id: this.ecobeeAPIKey,
 			}));
 			const authData = authRequest.data;
@@ -37,13 +52,15 @@ export class AuthTokenManager {
 
 			//console.log(`Updated auth token ${loadedAuthToken} with expiration ${this.expiration}`);
 
-			updateHomebridgeConfig(homebridge, (currentConfig) => {
-				return currentConfig.replace(refreshToken, loadedUpdatedRefreshToken);
+			updateHomebridgeConfig(this.platform.api, (currentConfig) => {
+				return currentConfig.replace(oldRefreshToken, loadedUpdatedRefreshToken);
 			});
+
+			this.platform.log.debug('Updating refresh token to ' + loadedUpdatedRefreshToken);
 
 			return { authToken: loadedAuthToken, expiresIn: loadedExpiresIn, refreshToken: loadedUpdatedRefreshToken };
 		} catch(error){
-			console.error(`Error refreshing token: ${JSON.stringify(error.response.data)}`);
+			this.platform.log.error(`Error refreshing token: ${JSON.stringify(error.response.data)}`);
 		}
 	}
 }
