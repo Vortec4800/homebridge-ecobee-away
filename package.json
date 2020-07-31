@@ -18,6 +18,9 @@
     "homebridge": ">0.4.53"
   },
   "main": "dist/index.js",
+  "bin": {
+    "ecobee-auth-cli": "ecobee-auth-cli.js"
+  },
   "scripts": {
     "lint": "eslint src/**.ts",
     "watch": "npm run build && npm link && nodemon",
@@ -27,7 +30,11 @@
   "keywords": [
     "homebridge-plugin"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "axios": "^0.19.2",
+    "moment": "^2.27.0",
+    "underscore": "^1.10.2"
+  },
   "devDependencies": {
     "@types/node": "^14.0.14",
     "@typescript-eslint/eslint-plugin": "^3.4.0",
