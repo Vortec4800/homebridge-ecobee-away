@@ -5,7 +5,6 @@ import axios from 'axios';
 import { EcobeeAPIPlatform } from './platform';
 
 import { AuthTokenManager } from './auth-token-refresh';
-import querystring from "querystring";
 
 /**
  * Platform Accessory
@@ -158,7 +157,7 @@ export class AwaySwitchAccessory {
 		}
 		const authToken = AuthTokenManager.authToken;
 
-		const queryRequest = await axios.get('https://api.ecobee.com/1/thermostat?format=json&body=\{"selection":\{"selectionType":"registered","selectionMatch":"","includeEvents":true\}\}', {headers: {'Authorization': 'Bearer ' + authToken}});
+		const queryRequest = await axios.get('https://api.ecobee.com/1/thermostat?format=json&body={"selection":{"selectionType":"registered","selectionMatch":"","includeEvents":true}}', {headers: {'Authorization': 'Bearer ' + authToken}});
 		const queryData = queryRequest.data;
 		//console.log(JSON.stringify(queryData));
 		const events = queryData.thermostatList[0].events;

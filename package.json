@@ -32,8 +32,7 @@
   ],
   "dependencies": {
     "axios": "^0.19.2",
-    "moment": "^2.27.0",
-    "underscore": "^1.10.2"
+    "moment": "^2.27.0"
   },
   "devDependencies": {
     "@types/node": "^14.0.14",

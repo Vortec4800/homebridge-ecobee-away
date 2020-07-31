@@ -1,5 +1,4 @@
 import moment from 'moment';
-import _ from 'underscore';
 import axios from 'axios';
 import querystring from 'querystring';
 import { updateHomebridgeConfig } from './config';
