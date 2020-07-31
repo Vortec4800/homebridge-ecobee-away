@@ -1,5 +1,4 @@
 {
-  "private": true,
   "displayName": "Ecobee Away",
   "name": "homebridge-ecobee-away",
   "version": "1.0.0",
