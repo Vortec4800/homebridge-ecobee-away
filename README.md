@@ -7,6 +7,7 @@
 
 
 # Homebridge Ecobee Away
+[![npm](https://img.shields.io/npm/v/homebridge-ecobee-away.svg)](https://www.npmjs.com/package/homebridge-ecobee-away)
 
 This Homebridge plugin is designed to expose a switch in your Home that controls the Ecobee thermostat home/away status.
 
