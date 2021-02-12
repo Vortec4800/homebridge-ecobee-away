@@ -1,7 +1,7 @@
 {
   "displayName": "Ecobee Away",
   "name": "homebridge-ecobee-away",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A short description about what your plugin does.",
   "author": "Cory Imdieke",
   "license": "Apache-2.0",
