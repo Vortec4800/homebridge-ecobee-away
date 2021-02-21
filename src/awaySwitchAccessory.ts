@@ -23,7 +23,7 @@ export class AwaySwitchAccessory {
 		this.accessory.getService(this.platform.Service.AccessoryInformation)!
 			.setCharacteristic(this.platform.Characteristic.Manufacturer, 'Ecobee')
 			.setCharacteristic(this.platform.Characteristic.Model, 'Away')
-			.setCharacteristic(this.platform.Characteristic.SerialNumber, '1');
+			.setCharacteristic(this.platform.Characteristic.SerialNumber, 'ECOBEEAWAY1');
 
 		// get the service if it exists, otherwise create a new service
 		// you can create multiple services for each accessory
