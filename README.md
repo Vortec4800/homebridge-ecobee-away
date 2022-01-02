@@ -42,7 +42,3 @@ To get a refresh token, if you have the plugin installed globally, run ecobee-au
 The command will walk you through the process to generate a token. Log in to your Ecobee web portal and enter the PIN given under the "Apps" tab. When the tool gives you a token, enter that into the config file.
 
 Note that the config file will automatically be updated as new refresh tokens are loaded from the server.
-
-## Current limitations
-
-This is built to work with a pretty simple setup, a single thermostat on the account and basic home/away comfort profiles, because that's what I have access to. I'm not sure what will happen if you hook this to an account with multiple thermostats on it, if you have that setup and can send a PR to support multiple thermostats I'd be thankful for that.
