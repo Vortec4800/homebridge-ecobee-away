@@ -71,12 +71,15 @@ export class AwaySwitchAccessory {
 				await AuthTokenManager.getInstance().renewAuthToken();
 			}
 			const authToken = AuthTokenManager.getInstance().authToken;
+			const selectionMatch = this.platform.config.thermostatIds || '';
+			const selectionType = selectionMatch ? 'thermostats' : 'registered';
+
 			if (targetValue) {
 				// away
 				const awayBody = {
 					'selection': {
-						'selectionType': 'registered',
-						'selectionMatch': '',
+						'selectionType': selectionType,
+						'selectionMatch': selectionMatch,
 					},
 					'functions': [
 						{
@@ -96,8 +99,8 @@ export class AwaySwitchAccessory {
 				// home
 				const homeBody = {
 					'selection': {
-						'selectionType': 'registered',
-						'selectionMatch': '',
+						'selectionType': selectionType,
+						'selectionMatch': selectionMatch,
 					},
 					'functions': [
 						{
