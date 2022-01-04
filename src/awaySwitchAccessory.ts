@@ -71,7 +71,7 @@ export class AwaySwitchAccessory {
 				await AuthTokenManager.getInstance().renewAuthToken();
 			}
 			const authToken = AuthTokenManager.getInstance().authToken;
-			const selectionMatch = this.platform.config.thermostatIds || '';
+			const selectionMatch = this.platform.config.thermostatSerialNumbers || '';
 			const selectionType = selectionMatch ? 'thermostats' : 'registered';
 
 			if (targetValue) {

@@ -30,7 +30,7 @@ Add the `EcobeeAway` platform in your homebridge `config.json` file.
       "name": "Ecobee Away",
       "platform": "EcobeeAway",
       "refreshToken": "token generated with ecobee-auth-cli.",
-      "thermostatIds": "100904852660,654234216036"
+      "thermostatSerialNumbers": "100904852660,654234216036"
     }
   ]
 }
@@ -44,6 +44,6 @@ The command will walk you through the process to generate a token. Log in to you
 
 Note that the config file will automatically be updated as new refresh tokens are loaded from the server.
 
-### Thermostat Ids (Optional)
+### Thermostat Serial Numbers (Optional)
 
-This is a list of thermostat serial numbers to control. You can leave this blank if you only have a single thermostat. You can find your thermostat's serial number in the app or on the website under the thermostat's "About" page.
+This is a list of thermostat serial numbers you want the plugin to control. You can leave this blank if you only have a single thermostat. You can find your thermostat's serial number in the app or on the website under the thermostat's "About" page.

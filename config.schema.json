@@ -17,7 +17,7 @@
         "type": "string",
         "required": true
       },
-      "thermostatIds": {
+      "thermostatSerialNumbers": {
         "title": "Thermostat Serial Numbers",
         "description": "List of thermostat serial numbers to control. You can leave blank if you only have a single thermostat.",
         "type": "string",
