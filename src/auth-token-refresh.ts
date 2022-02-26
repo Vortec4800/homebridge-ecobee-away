@@ -67,7 +67,14 @@ export class AuthTokenManager {
 
 			return loadedAuthToken;
 		} catch(error){
-			this.platform.log.error(`Error refreshing token: ${JSON.stringify(error.response.data)}`);
+			let errorMessage: string;
+			if (axios.isAxiosError(error)) {
+				errorMessage = JSON.stringify(error.response?.data);
+			} else {
+				errorMessage = JSON.stringify(error);
+			}
+
+			this.platform.log.error(`Error refreshing token: ${errorMessage}`);
 		}
 	}
 }

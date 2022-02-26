@@ -1,6 +1,4 @@
 /* eslint-disable no-console */
-import { requestInput } from './cli-util';
-
 import axios from 'axios';
 import querystring from 'querystring';
 
@@ -41,13 +39,12 @@ async function checkForTokenResult(authCode: string, interval: number) {
 			const refreshToken = authData.refresh_token;
 
 			return { accessToken: accessToken, refreshToken: refreshToken };
-		} catch (error) {
-			if (!error.isAxiosError) {
-				// Can't get out of this one
+		} catch (error: unknown) {
+			if (!axios.isAxiosError(error)) {
 				throw error;
 			}
 			// Check error info, likely waiting for user or expired
-			const errorData = error.response.data;
+			const errorData = error.response?.data;
 			if (errorData.error === 'authorization_pending') {
 				// Wait duration and try again
 				await new Promise(resolve => setTimeout(resolve, (interval + 1) * 1000));
