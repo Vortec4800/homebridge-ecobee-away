@@ -121,7 +121,7 @@ export class AwaySwitchAccessory {
 
 			callback(null);
 		} catch(error){
-			callback(error);
+			callback(error as Error);
 		}
 	}
 
