@@ -1,7 +1,11 @@
 {
   "displayName": "Ecobee Away",
   "name": "homebridge-ecobee-away",
+<<<<<<< HEAD
   "version": "1.0.2",
+=======
+  "version": "1.0.3",
+>>>>>>> da3f4090bce74c7b8a5670079e87088a84893577
   "description": "Homebridge plugin to control Ecobee thermostat home/away status",
   "author": "Cory Imdieke",
   "license": "Apache-2.0",
