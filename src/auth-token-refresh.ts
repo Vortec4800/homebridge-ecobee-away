@@ -67,7 +67,7 @@ export class AuthTokenManager {
 
 			return loadedAuthToken;
 		} catch(error){
-			this.platform.log.error(`Error refreshing token: ${JSON.stringify(error.response.data)}`);
+			this.platform.log.error(`Error refreshing token: ${JSON.stringify(error)}`);
 		}
 	}
 }
