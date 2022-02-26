@@ -13,8 +13,8 @@
     "url": "https://github.com/Vortec4800/homebridge-ecobee-away/issues"
   },
   "engines": {
-    "node": ">=10.17.0",
-    "homebridge": ">0.4.53"
+    "node": ">=14",
+    "homebridge": ">1.3.0"
   },
   "main": "dist/index.js",
   "bin": {
@@ -42,6 +42,6 @@
     "nodemon": "^2.0.7",
     "rimraf": "^3.0.2",
     "ts-node": "^9.1.1",
-    "typescript": "^4.1.5"
+    "typescript": "^4.4"
   }
 }
