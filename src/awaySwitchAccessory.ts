@@ -160,7 +160,14 @@ export class AwaySwitchAccessory {
 
 		const queryRequest = await axios.get('https://api.ecobee.com/1/thermostat?format=json&body={"selection":{"selectionType":"registered","selectionMatch":"","includeEvents":true}}', {headers: {'Authorization': 'Bearer ' + authToken}});
 		const queryData = queryRequest.data;
-		//console.log(JSON.stringify(queryData));
+
+		if (!queryData || !queryData.thermostatList) {
+			this.platform.log.error('Unexpected query data: ' + JSON.stringify(queryData));
+
+			// Ideally we might want to put the accessory into a "Not Responding" state but for now we'll just claim normal operation
+			return 'home';
+		}
+			
 		const events = queryData.thermostatList[0].events;
 
 		if(events.length > 0){

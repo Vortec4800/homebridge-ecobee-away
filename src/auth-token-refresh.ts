@@ -51,7 +51,9 @@ export class AuthTokenManager {
 
 			const loadedAuthToken = authData.access_token;
 			const loadedExpiresIn = authData.expires_in;
-			const loadedUpdatedRefreshToken = authData.refresh_token;
+
+			// In the event we get an invalid response, keep the old refresh token
+			const loadedUpdatedRefreshToken = authData.refresh_token ?? oldRefreshToken;
 
 			this.authToken = loadedAuthToken;
 			this.refreshToken = loadedUpdatedRefreshToken;
